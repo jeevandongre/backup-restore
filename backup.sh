@@ -2,7 +2,7 @@
 NOWDATE=`date +%Y-%m-%d`
 BACKUPNAME=$NOWDATE.sql.gz
 echo “Creating backup of database to $BACKUPNAME”
-mysqldump "RDS CONNECTION END POINT" -u "USER" -p"PASSWORD" "DATABASE_NAME" | gzip -9 > $BACKUPNAME
+mysqldump "RDS CONNECTION END POINT" -u "USER" --single-transaction -p"PASSWORD" "DATABASE_NAME" | gzip -9 > $BACKUPNAME
 echo “Succesfully created database backup”
 echo “Uploading backup to Amazon S3 bucket…”
 /usr/bin/s3cmd put $BACKUPNAME s3://path/to/bucket/$BACKUPNAME
